@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EN 之家</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "PingFang SC", sans-serif;
+        background: #fffbea;
+    }
+
+    /* 全局色调 */
+    :root {
+        --yellow: #ffe14d;
+        --blue: #79b7ff;
+        --deep-blue: #4a90e2;
+        --card: #ffffff;
+        --text: #333;
+    }
+
+    /* 登录页 */
+    #loginPage {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, var(--yellow), var(--blue));
+    }
+
+    #loginBox {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        width: 300px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    input {
+        width: 90%;
+        height: 38px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding-left: 10px;
+    }
+
+    button {
+        width: 95%;
+        height: 40px;
+        border: none;
+        border-radius: 8px;
+        background: var(--deep-blue);
+        color: white;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    /* 主界面 */
+    #mainPage {
+        display: none;
+    }
+
+    nav {
+        background: var(--blue);
+        padding: 15px;
+        display: flex;
+        justify-content: space-around;
+        color: white;
+        font-weight: bold;
+    }
+
+    nav div {
+        cursor: pointer;
+    }
+
+    .page {
+        padding: 20px;
+        display: none;
+        position: relative;
+        min-height: calc(100vh - 150px);
+    }
+
+    .card {
+        background: var(--card);
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .petName {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--deep-blue);
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px dashed #ccc;
+        margin: 20px 0;
+    }
+
+    .msg {
+        white-space: pre-line;
+        line-height: 1.5;
+    }
+
+    .msgUser {
+        font-weight: bold;
+        color: var(--deep-blue);
+    }
+
+    /* 领养表单 */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: var(--deep-blue);
+    }
+
+    select, textarea {
+        width: 95%;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    textarea {
+        height: 80px;
+    }
+
+    /* 页面底部提示文字 */
+    .page-footer {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+        padding: 10px 20px;
+        font-style: italic;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 600px) {
+        #loginBox {
+            width: 85%;
+            padding: 20px;
+        }
+        
+        nav {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        nav div {
+            margin: 5px 0;
+        }
+        
+        .page-footer {
+            position: relative;
+            margin-top: 20px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 登录界面 -->
+<div id="loginPage">
+    <div id="loginBox">
+        <h2>EN 之家</h2>
+        <p style="font-size:13px; opacity:0.8;">密码提示：highway？</p>
+        <input id="username" placeholder="用户名">
+        <input id="password" type="password" placeholder="密码">
+        <button onclick="login()">登录</button>
+        <button onclick="guest()" style="background: white; color: var(--deep-blue); border: 1px solid var(--deep-blue);">游客访问</button>
+    </div>
+    <div class="page-footer">*它们比你想象得更懂事，也比你看到的更不普通。它们有些特别，所以更需要被爱。</div>
+</div>
+
+<!-- 主界面 -->
+<div id="mainPage">
+    <nav>
+        <div onclick="showPage('homePage')">萌宠信息</div>
+        <div onclick="showPage('adoptPage')">领养登记</div>
+        <div onclick="showPage('msgPage')">留言板</div>
+    </nav>
+
+    <!-- 萌宠信息 -->
+    <div id="homePage" class="page">
+        <h2>萌宠信息</h2>
+
+        <div class="card">
+            <div class="petName">综综 / 黑猫</div>
+            <p>性格：有点傲娇、爱搞笑、温柔又恃宠而骄。最喜欢蜷在窗台的阳光里，时不时会发出不太礼貌的喵叫。<br>
+            小提示：对熟悉的人会格外信任，吃玉米和土豆会表现出超高热情。</p>
+        </div>
+
+        <div class="card">
+            <div class="petName">西西 / 仓鼠</div>
+            <p>温柔，摸起来很软，喜欢被包在小被子里，在哪儿都会睡着。适合喜欢安静陪伴的人。</p>
+        </div>
+
+        <div class="card">
+            <div class="petName">圆圆 / 三花猫</div>
+            <p>可爱有担当，年纪不大却很懂事，是团体里的"小大人"。</p>
+        </div>
+
+        <div class="card">
+            <div class="petName">雨雨 / 小狐狸</div>
+            <p>高冷但萌，十分爱美，喜欢镜子前整理毛发。适合和雨雨一样精致的领养者。</p>
+        </div>
+
+        <div class="card">
+            <div class="petName">尼基 / 小鸭子</div>
+            <p>顽皮又亲人，特别喜欢和小朋友互动，在小动物中是"小霸王团宠"。</p>
+        </div>
+        
+        <div class="page-footer">*它们比你想象得更懂事，也比你看到的更不普通。它们有些特别，所以更需要被爱。</div>
+    </div>
+
+    <!-- 领养登记 -->
+    <div id="adoptPage" class="page">
+        <h2>领养登记</h2>
+
+        <div class="card">
+            <div class="form-group">
+                <label for="adopterName">领养人昵称</label>
+                <input id="adopterName" placeholder="例如：结课啦">
+            </div>
+            
+            <div class="form-group">
+                <label for="petSelect">选择萌宠</label>
+                <select id="petSelect">
+                    <option value="" disabled selected>请选择萌宠</option>
+                    <option value="西西">西西 / 仓鼠</option>
+                    <option value="圆圆">圆圆 / 三花猫</option>
+                    <option value="雨雨">雨雨 / 小狐狸</option>
+                    <option value="尼基">尼基 / 小鸭子</option>
+                    <option value="综综" disabled>综综 / 黑猫（已被领养）</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="adoptNote">留言（可选）</label>
+                <textarea id="adoptNote" placeholder="想对小动物或我们说的话..."></textarea>
+            </div>
+            
+            <button onclick="submitAdoption()">提交申请</button>
+            <button onclick="clearAdoptionForm()" style="background: white; color: var(--deep-blue); border: 1px solid var(--deep-blue); margin-top: 10px;">清空表单</button>
+        </div>
+
+        <div class="card">
+            <h3>领养记录</h3>
+            <div id="adoptionRecords">
+                <p><strong>结课啦</strong> — 领养了 <strong>综综 / 黑猫</strong>（已领养，家中安置） — 2025-11-20 21:18</p>
+                <p><strong>小明</strong> — 领养了 <strong>小布 / 仓鼠</strong> — 2025-10-12 10:02</p>
+                <p><strong>李小姐</strong> — 领养了 <strong>皮皮 / 小龟</strong> — 2025-09-05 14:22</p>
+                <p><strong>阿豪</strong> — 领养了 <strong>小白 / 狗</strong> — 2025-08-21 16:45</p>
+            </div>
+        </div>
+        
+        <div class="page-footer">*它们比你想象得更懂事，也比你看到的更不普通。它们有些特别，所以更需要被爱。</div>
+    </div>
+
+    <!-- 留言板 -->
+    <div id="msgPage" class="page">
+        <h2>留言板</h2>
+        
+        <div class="card">
+            <div class="form-group">
+                <label for="messageAuthor">你的昵称</label>
+                <input id="messageAuthor" placeholder="例如：结课啦">
+            </div>
+            
+            <div class="form-group">
+                <label for="messageContent">留言内容</label>
+                <textarea id="messageContent" placeholder="写点暖心的事情吧~"></textarea>
+            </div>
+            
+            <button onclick="postMessage()">发布留言</button>
+            <button onclick="clearMessageForm()" style="background: white; color: var(--deep-blue); border: 1px solid var(--deep-blue); margin-top: 10px;">清空</button>
+        </div>
+
+        <!-- 留言列表 -->
+        <div id="msgList"></div>
+        
+        <div class="page-footer">*它们比你想象得更懂事，也比你看到的更不普通。它们有些特别，所以更需要被爱。</div>
+    </div>
+</div>
+
+<script>
+// 登录逻辑
+function login() {
+    const user = document.getElementById("username").value;
+    const pwd = document.getElementById("password").value;
+
+    if (pwd === "en1009") {
+        enter();
+        alert("登录成功！欢迎回到 EN 之家 —— 夜色里，总有人在窗台上等你。");
+    } else {
+        alert("密码错误！（提示：highway?）");
+    }
+}
+
+function guest() {
+    document.getElementById("username").value = "游客";
+    enter();
+    alert("已以游客身份进入 EN 之家。走走看看，说不定会遇见谁。");
+}
+
+// 进入主界面
+function enter() {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+    document.getElementById("homePage").style.display = "block";
+    
+    // 如果用户名为"结课啦"，自动填充领养人昵称
+    if (document.getElementById("username").value === "结课啦") {
+        document.getElementById("adopterName").value = "结课啦";
+    }
+}
+
+// 切换页面
+function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+    document.getElementById(id).style.display = "block";
+    
+    // 如果是留言板页面，渲染留言
+    if (id === "msgPage") {
+        renderMessages();
+    }
+}
+
+// 领养登记功能
+function submitAdoption() {
+    const adopter = document.getElementById("adopterName").value.trim();
+    const pet = document.getElementById("petSelect").value;
+    const note = document.getElementById("adoptNote").value.trim();
+    
+    if (!adopter) {
+        alert("请输入领养人昵称");
+        return;
+    }
+    
+    if (!pet) {
+        alert("请选择要领养的宠物");
+        return;
+    }
+    
+    if (pet === "综综") {
+        alert("抱歉，综综已经被领养，无法再次领养。");
+        return;
+    }
+    
+    // 创建时间戳
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    // 创建记录元素
+    const record = document.createElement("p");
+    record.innerHTML = `<strong>${escapeHtml(adopter)}</strong> — 领养了 <strong>${escapeHtml(pet)}</strong> — ${timeStr}`;
+    
+    if (note) {
+        record.innerHTML += `<div style="font-size:14px;color:#666;margin-top:5px;">留言：${escapeHtml(note)}</div>`;
+    }
+    
+    // 添加到记录列表顶部
+    document.getElementById("adoptionRecords").prepend(record);
+    
+    // 清空表单
+    clearAdoptionForm();
+    
+    alert("领养申请已提交！我们会尽快与您联系～");
+}
+
+function clearAdoptionForm() {
+    document.getElementById("adopterName").value = "";
+    document.getElementById("petSelect").value = "";
+    document.getElementById("adoptNote").value = "";
+}
+
+// 留言板功能
+const messages = [
+    { author: "结课啦", content: "最近综综在家里越来越有精神啦！昨天半夜还。。总之就是他经常跑过来踩我，叫我起床，说\"我饿了\"。\n虽然被吵醒。。但总体来说综综很乖，猫好ㅎㅎㅎ", time: "2025-11-21 20:12" },
+    { author: "我是保洁", content: "综综好像很喜欢你诶ㅋㅋㅋ猫不会随便踩别人肚子的！！", time: "2025-11-21 20:28" },
+    { author: "momo", content: "来借楼问一下：收容所会提供简单的领养指导吗？想带西西回家～", time: "2025-11-21 20:33" },
+    { author: "西瓜汽水", content: "怎么这里也有momo大军啊！", time: "2025-11-21 20:35" },
+    { author: "谁偷走了我的克罗心", content: "综综是不是那种看起来傲娇但其实一直盯着你的人型小猫咪……", time: "2025-11-21 20:39" },
+    { author: "别再吃了", content: "我昨天去 EN 之家看了，尼基居然把我鞋带咬开了ㅠㅠ它真的太调皮了！", time: "2025-11-21 20:43" },
+    { author: "蒸一个丸子", content: "圆圆今天阻止了两只吵架的小动物！！小小年纪好懂事！", time: "2025-11-21 20:46" },
+    { author: "我是保洁", content: "Jake 那条我看到笑疯ㅋㅋㅋㅋ 你家综综怎么看都不像乖的……", time: "2025-11-21 20:50" },
+    { author: "哈利波特骑着扫帚飞", content: "楼上＋1", time: "2025-11-21 20:52" },
+    { author: "谁家猫这么美萌", content: "回蒸丸子！圆圆就是长得特别特别好看还一身正气的那种小茂密！", time: "2025-11-21 20:56" },
+    { author: "匿名用户", content: "有没有圆圆的照片！！", time: "2025-11-21 20:58" },
+    { author: "大美西城", content: "今天西西睡觉把脸埋在手里了ㅠㅠ可爱得泪目", time: "2025-11-21 20:57" },
+    { author: "结课啦", content: "我家综综可能有点叛逆期？今天嫌我煮的土豆\"不够绵密\"🫠", time: "2025-11-21 20:58" },
+    { author: "momo", content: "综综老吃家了ㅋㅋㅋㅋ", time: "2025-11-21 20:59" },
+    { author: "结课啦", content: "刚刚他抢我手机回自己的窝里了！果然是叛逆期！", time: "2025-11-21 21:00" },
+    { author: "宝宝妈妈带你回家嘿嘿", content: "雨雨今天对镜子梳毛好优雅ㅠㅠ 女神好美！", time: "2025-11-21 21:01" },
+    { author: "好粗心呜呜呜", content: "我领养的小乌龟太胆小了，我靠近它它直接把自己埋进垫子里……", time: "2025-11-21 21:02" },
+    { author: "结课啦", content: "今天我们吵架了！啊不是，是我家综综生气了！", time: "2025-11-21 21:03" },
+    { author: "别再吃了", content: "尼基今天抢了其他宝宝的零食还装无辜。", time: "2025-11-21 21:04" },
+    { author: "我是保洁", content: "你家综综怎么回事？猫成精了？成神了？成人了？", time: "2025-11-21 21:05" },
+    { author: "结课啦", content: "！！！！！！私聊🤐", time: "2025-11-21 21:06" },
+    { author: "哈利波特骑着扫帚飞", content: "能不能也ccw？？", time: "2025-11-21 21:07" },
+    { author: "一位不愿意透露姓名的引擎", content: "这周末有小市集，收容所会摆摊义卖，欢迎来玩～", time: "2025-11-21 21:08" },
+    { author: "借来的仓", content: "今天看到一个小朋友抱着西西在呼呼睡，想哭，好治愈。", time: "2025-11-21 21:09" },
+    { author: "谁偷走了我的ck", content: "带来的玩具大家都分着玩，场面和谐。", time: "2025-11-21 21:10" },
+    { author: "谁偷走了我的克罗心", content: "？？你抄我id！！！", time: "2025-11-21 21:11" },
+    { author: "结课啦", content: "今天他非说我煮的饭难吃，自己还吃了两碗，哼哼……", time: "2025-11-21 21:12" },
+    { author: "哈利波特骑着扫帚飞", content: "我靠这语气不像结课啦……是谁发的细思鼻孔！！！", time: "2025-11-21 21:13" },
+    { author: "结课啦", content: "。🫠你们别乱说！", time: "2025-11-21 21:14" },
+    { author: "我是保洁", content: "看见结课啦本保洁扫地扫得更卖力了。", time: "2025-11-21 21:15" },
+    { author: "想要更酷的车和房子吗", content: "今天去帮忙整理床垫时发现收容所每只动物床下都藏着小纸条，像小秘密本。", time: "2025-11-21 21:16" },
+    { author: "巨大麻袋", content: "西西今天又睡了十个小时！好高的睡眠质量！", time: "2025-11-21 21:17" },
+    { author: "不要吃饭团", content: "我要来接尼基啦！我考试考得很好！！妈妈说周六可以把尼基带回家了ㅎㅎ 尼基我来了！！", time: "2025-11-21 21:18" },
+    { author: "别过来咬我", content: "饭团是小朋友吗也太可爱了哈哈哈，尼基一直很喜欢他来着！", time: "2025-11-21 21:19" },
+    { author: "给我拿来", content: "好喜欢 EN 之家，好多人，好温暖ㅠㅠ", time: "2025-11-21 21:20" }
+];
+
+function renderMessages() {
+    const container = document.getElementById("msgList");
+    container.innerHTML = "";
+    
+    messages.forEach(msg => {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "card msg";
+        msgDiv.innerHTML = `
+            <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                <span class="msgUser">${escapeHtml(msg.author)}</span>
+                <span style="font-size:12px;color:#666;">${msg.time}</span>
+            </div>
+            <div>${escapeHtml(msg.content).replace(/\n/g, '<br>')}</div>
+        `;
+        container.appendChild(msgDiv);
+    });
+}
+
+function postMessage() {
+    const author = document.getElementById("messageAuthor").value.trim();
+    const content = document.getElementById("messageContent").value.trim();
+    
+    if (!author) {
+        alert("请输入你的昵称");
+        return;
+    }
+    
+    if (!content) {
+        alert("请输入留言内容");
+        return;
+    }
+    
+    // 创建时间戳
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    // 添加到消息数组
+    messages.unshift({
+        author: author,
+        content: content,
+        time: timeStr
+    });
+    
+    // 重新渲染留言
+    renderMessages();
+    
+    // 清空表单
+    clearMessageForm();
+    
+    alert("留言已发布！感谢你的分享～");
+}
+
+function clearMessageForm() {
+    document.getElementById("messageAuthor").value = "";
+    document.getElementById("messageContent").value = "";
+}
+
+// HTML转义函数
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// 页面加载时渲染留言
+document.addEventListener("DOMContentLoaded", function() {
+    renderMessages();
+});
+</script>
+</body>
+</html>
